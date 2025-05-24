@@ -1,15 +1,34 @@
 import joblib
 
-# Încarcă modelul și scalerul
-model = joblib.load("asteroid_model.pkl")
-scaler = joblib.load("scaler.pkl")
+def predict_from_file():
+    # Încarcă modelul și scalerul
+    model = joblib.load("asteroid_model.pkl")
+    scaler = joblib.load("scaler.pkl")
 
-# Exemplu: 6 caracteristici -> citire din fișier
-with open("sample_input.txt", "r") as f:
-    raw_input = f.read().strip().split(",")  # CSV format
+    # Citire obiecte multiple din fișier (unul pe fiecare linie)
+    with open("sample_input.txt", "r") as f:
+        lines = f.readlines()
 
-features = [float(val) for val in raw_input]
-scaled = scaler.transform([features])
-prediction = model.predict(scaled)
+    # Procesează fiecare obiect separat
+    for line in lines:
+        # Ignoră liniile goale
+        if not line.strip():
+            continue
+            
+        # Extrage și prelucrează caracteristicile
+        raw_input = line.strip().split(",")  # CSV format
+        
+        try:
+            features = [float(val) for val in raw_input]
+            scaled = scaler.transform([features])
+            prediction = model.predict(scaled)
+            
+            # Afișează rezultatul pentru fiecare obiect
+            print(f"Periculos" if prediction[0] == 1 else 'Nepericulos')
+        except ValueError as e:
+            print(f"Eroare la procesarea obiectului: {e}")
+        except Exception as e:
+            print(f"Eroare neașteptată la obiectul: {e}")
 
-print("Este periculos!" if prediction[0] == 1 else "Nu este periculos.")
+if __name__ == "__main__":
+    predict_from_file()

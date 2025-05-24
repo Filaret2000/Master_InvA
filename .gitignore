@@ -1,1 +1,9 @@
 /.ipynb_checkpoints
+/nasa.csv
+/asteroid_model.pkl
+/scaler.pkl
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
