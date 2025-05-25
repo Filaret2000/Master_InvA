@@ -29,6 +29,4 @@ def predict_from_file():
             print(f"Eroare la procesarea obiectului: {e}")
         except Exception as e:
             print(f"Eroare neașteptată la obiectul: {e}")
-
-if __name__ == "__main__":
-    predict_from_file()
+            
