@@ -10,7 +10,7 @@ def predict_from_file():
         lines = f.readlines()
 
     # Procesează fiecare obiect separat
-    for line in lines:
+    for i,line in enumerate(lines):
         # Ignoră liniile goale
         if not line.strip():
             continue
@@ -23,10 +23,10 @@ def predict_from_file():
             scaled = scaler.transform([features])
             prediction = model.predict(scaled)
             
+            print(f"{i:2}. ", end="")
             # Afișează rezultatul pentru fiecare obiect
             print(f"Periculos" if prediction[0] == 1 else 'Nepericulos')
         except ValueError as e:
             print(f"Eroare la procesarea obiectului: {e}")
         except Exception as e:
             print(f"Eroare neașteptată la obiectul: {e}")
-            
